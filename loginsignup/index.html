@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login & Signup Form</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="forms-container">
+      <form id="signupForm" class="form-signup" onsubmit="return validateForm()">
+        <h2>Sign Up</h2>
+        <input type="text" name="firstName" placeholder="First Name" required>
+        <input type="text" name="lastName" placeholder="Last Name" required>
+        <input type="text" name="userName" placeholder="User Name" required>
+        <input type="text" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <input type="password" name="confirmPassword" placeholder="Confirm password" required>
+        <div class="terms">
+          <input type="checkbox" id="checkbox" required> 
+          <label for="checkbox">I agree to these <a href="#">Terms and Conditions</a></label>
+        </div>
+        <button type="submit">Sign Up</button>
+      </form>
+      <div class="member">
+        Have an account already? <a href="login.html">Login</a>
+      </div>
+      <div id="signupModal" class="modal" style="display: none;">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Sign Up Successful!</h2>
+          <p>You have successfully signed up. Redirecting to login page <a href="login.html"></a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function validateForm() {
+      var firstName = document.forms["signupForm"]["firstName"].value;
+      var lastName = document.forms["signupForm"]["lastName"].value;
+      var userName = document.forms["signupForm"]["userName"].value;
+      var email = document.forms["signupForm"]["email"].value;
+      var password = document.forms["signupForm"]["password"].value;
+      var confirmPassword = document.forms["signupForm"]["confirmPassword"].value;
+      var checkbox = document.getElementById("checkbox");
+
+      if (firstName === '' || lastName === '' || userName === '' || email === '' || password === '' || confirmPassword === '') {
+        alert("All fields must be filled out");
+        return false;
+      }
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match");
+        return false;
+      }
+
+      var regex = /^(?=.*[0-9A-Fa-f])(?=.*[^0-9A-Fa-f\s]).{8,16}$/;
+
+      if (!regex.test(password)) {
+        alert("Password must be 8 to 16 characters long, including hexadecimal and special characters.");
+        return false;
+      }
+
+      if (!checkbox.checked) {
+        alert("Please agree to the terms and conditions");
+        return false;
+      }
+
+      if (!email.endsWith('@gmail.com')) {
+        alert("Please sign up with a Gmail account");
+        return false;
+      }
+
+      var signupModal = document.getElementById("signupModal");
+      signupModal.style.display = "block";
+      setTimeout(function() {
+        window.location.href = "login.html";
+      }, 3000);
+
+      return false;
+    }
+  </script>
+</body>
+</html>
